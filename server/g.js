@@ -1,1 +1,1 @@
-data = lorem10
+import mongoose from "mongoose"
