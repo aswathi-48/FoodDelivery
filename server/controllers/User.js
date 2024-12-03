@@ -12,7 +12,12 @@ dotenv.config();
 export const UserRegister = async (req, res, next) => {
   try {
     const { email, password, name, img } = req.body;
-
+    console.log(req.body);
+     // Validate input
+     if (!email || !password || !name) {
+      return next(createError(400, "Missing required fields."));
+    }
+    
     //Check for existing user
     const existingUser = await User.findOne({ email }).exec();
     if (existingUser) {
@@ -28,6 +33,9 @@ export const UserRegister = async (req, res, next) => {
       password: hashedPassword,
       img,
     });
+    console.log(user);
+
+    
     const createdUser = await user.save();
     const token = jwt.sign({ id: createdUser._id }, process.env.JWT, {
       expiresIn: "9999 years",
@@ -41,7 +49,8 @@ export const UserRegister = async (req, res, next) => {
 export const UserLogin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
+    console.log(req.body);
+    
     //Check for existing user
     const user = await User.findOne({ email: email }).exec();
     if (!user) {
@@ -66,7 +75,11 @@ export const UserLogin = async (req, res, next) => {
 
 export const addToCart = async (req, res, next) => {
   try {
+    console.log("gcsdghds");
+    
     const { productId, quantity } = req.body;
+    console.log(re.body);
+    
     const userJWT = req.user;
     const user = await User.findById(userJWT.id);
     const existingCartItemIndex = user.cart.findIndex((item) =>

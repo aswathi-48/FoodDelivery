@@ -175,7 +175,7 @@ const FoodDetails = () => {
 
   const addFavourite = async () => {
     setFavoriteLoading(true);
-    const token = localStorage.getItem("krist-app-token");
+    const token = localStorage.getItem("foodeli-app-token");
     await addToFavourite(token, { productId: id })
       .then((res) => {
         setFavorite(true);
@@ -220,6 +220,8 @@ const FoodDetails = () => {
   }, []);
 
   const addCart = async () => {
+    console.log("data");
+    
     setCartLoading(true);
     const token = localStorage.getItem("krist-app-token");
     await addToCart(token, { productId: id, quantity: 1 })
